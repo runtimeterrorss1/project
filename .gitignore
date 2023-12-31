@@ -1,0 +1,22 @@
+# Virtual Environment
+venv/
+env/
+venv_name/
+__pycache__/
+
+# IDE or Editor files
+.vscode/
+.idea/
+
+# Compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Compiled C extensions
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
