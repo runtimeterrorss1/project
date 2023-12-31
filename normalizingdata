@@ -1,7 +1,8 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
 
 df = pd.read_csv('D:/1. BS CS FALL 2023/MLOps/Project/project/dummy_sensor_data.csv', parse_dates=['Timestamp'])
 # print(df.head(10))
@@ -11,3 +12,24 @@ df['Date'] = df['Timestamp'].dt.day
 df['Month'] = df['Timestamp'].dt.month
 # print(df.head(10))
 # print(df[['Timestamp', 'Hours', 'Month']])
+x = df[['Hours', 'Date', 'Month', 'Machine_ID', 'Sensor_ID']]
+y = df['Reading']
+
+#standard Scalar for scaling -> numeric
+#one hot encoder for encoding -> categorical
+#numeric cols
+cols1= ['Hours', 'Date', 'Month']
+#categorical cols
+cols2= ['Machine_ID', 'Sensor_ID']
+
+scaled = StandardScaler()
+encoded= OneHotEncoder(handle_unknown='ignore')
+
+preprocessing = ColumnTransformer(
+    transformers=[
+        ('num', scaled, cols1),
+        ('cat', encoded, cols2)
+    ])
+X_transformed = preprocessing.fit_transform(x)
+
+X_train, X_val, y_train, y_val = train_test_split(X_transformed, y, test_size=0.2, random_state=42)
