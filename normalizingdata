@@ -1,0 +1,13 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+
+df = pd.read_csv('D:/1. BS CS FALL 2023/MLOps/Project/project/dummy_sensor_data.csv', parse_dates=['Timestamp'])
+# print(df.head(10))
+# df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+df['Hours'] = df['Timestamp'].dt.hour
+df['Date'] = df['Timestamp'].dt.day
+df['Month'] = df['Timestamp'].dt.month
+# print(df.head(10))
+# print(df[['Timestamp', 'Hours', 'Month']])
