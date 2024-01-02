@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import subprocess  # Import subprocess for triggering retraining
+
 from preprocessing_data import preprocessing_data
 from train_model import train_model
 from sklearn.ensemble import RandomForestRegressor
@@ -22,7 +24,9 @@ def load_data_csv():
     
     return data
 
-
+def trigger_retraining(mse_threshold=500):
+    print("Retraining triggered!")
+    subprocess.call(['python', 'train_model.py'])
 def run_main():
     print("Loading Data...")
     data = load_data_csv()
@@ -142,18 +146,14 @@ def run_main():
             signature=signature,
             input_example=X_test,
             registered_model_name="xgboost_model",
-        )
+        )   
     
     
-    
+    if mse > 500:
+        #triggering retraining data
+        print("")
+        trigger_retraining()
 
-    
-    
-    
-    
-    
-    
-    
     # pass
 
 
