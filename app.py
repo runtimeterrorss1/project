@@ -19,11 +19,21 @@ def load_best_model():
     best_run = client.search_runs(
         experiment_ids=[Id_exp],
         order_by=[f"metrics.{name_Metric} DESC"]
-    ).iloc[0]
-    run_id = best_run.run_id
-    model_path = f"runs:/{run_id}/best_model"
+    )
+    if not best_run:
+        raise ValueError("No runs found for the experiment")
+    
+    best_run_df = pd.DataFrame(best_run)
+    
+    # Print the columns to identify the correct column name for run ID
+    print("Columns:", best_run_df.columns)
+    
+    # Replace 'run_id' with the correct column name for run ID
+    run_id = best_run_df.iloc[0]['<correct_column_name_for_run_id>']
+    model_path = f"/mlruns/0/{run_id}/artifacts/best_model"
     best_model = mlflow.sklearn.load_model(model_path)
     return best_model
+
 
 data = {
     "Timestamp": ["2023-01-01 00:00:00"] * 15,
@@ -40,8 +50,8 @@ def predict():
     try:
         df = pd.DataFrame(data)
         df['Timestamp'] = pd.to_datetime(df['Timestamp'])
-        df['Hour'] = df['Timestamp'].dt.hour
-        df['Day'] = df['Timestamp'].dt.day
+        df['Hours'] = df['Timestamp'].dt.hour
+        df['Date'] = df['Timestamp'].dt.day
         df['Month'] = df['Timestamp'].dt.month
         X = df[['Hours', 'Date', 'Month', 'Machine_ID', 'Sensor_ID']]
         #standard Scalar for scaling -> numeric
@@ -59,8 +69,9 @@ def predict():
                 ('num', scaled, cols1),
                 ('cat', encoded, cols2)
             ])
-        X_transformed = preprocessing.fit_transform(X)
+        # X_transformed = preprocessing.fit_transform(X)
         X_df = pd.DataFrame(X, columns=['Hours', 'Date', 'Month', 'Machine_ID', 'Sensor_ID'])
+        X_transformed = preprocessing.fit_transform(X_df)
 
         predictions = best_model.predict(X_transformed)
         print("Prediction:", predictions)

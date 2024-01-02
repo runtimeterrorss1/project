@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/1.%20BS%20CS%20FALL%202023/MLOps/Project/project/mlruns/0/dd760c6214b94b819d730718581c5ff8/artifacts
+end_time: 1704068923028
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: dd760c6214b94b819d730718581c5ff8
+run_name: grandiose-skunk-159
+run_uuid: dd760c6214b94b819d730718581c5ff8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1704068909962
+status: 3
+tags: []
+user_id: DELL
