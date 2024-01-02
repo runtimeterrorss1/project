@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/361143091925791203/9228f6a8dc1c450683c9909c627a9030/artifacts
+end_time: 1704174258083
+entry_point_name: ''
+experiment_id: '361143091925791203'
+lifecycle_stage: active
+run_id: 9228f6a8dc1c450683c9909c627a9030
+run_name: silent-duck-562
+run_uuid: 9228f6a8dc1c450683c9909c627a9030
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1704174257979
+status: 4
+tags: []
+user_id: HP

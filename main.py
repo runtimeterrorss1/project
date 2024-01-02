@@ -1,4 +1,3 @@
-import mlflow
 import pandas as pd
 import numpy as np
 from preprocessing_data import preprocessing_data
@@ -12,6 +11,10 @@ import pandas as pd
 import xgboost as xgb
 from xgboost import XGBRegressor
 from sklearn.model_selection import GridSearchCV
+
+import mlflow
+from mlflow import MlflowClient
+from mlflow.models import infer_signature
 
 
 def load_data_csv():
@@ -54,6 +57,9 @@ def run_main():
 
     X_test = processed_data.loc[test_mask, your_feature_columns]
     y_test = processed_data.loc[test_mask, 'Reading']
+    
+
+    
     
     print("Doing Hypermeter Tuning...")
     param_grid = {
@@ -101,13 +107,46 @@ def run_main():
     print("Feature Importances:")
     print(feature_importance_df)
     
+    # Setting Artifact Path
+    artifact_path = "mlruns"
+    # Set the run name to identify the experiment run
+    run_name = "model_run"
+    # Connecting to the MLflow server
+    client = MlflowClient(tracking_uri="http://127.0.0.1:5001")
+    mlflow.set_tracking_uri("http://127.0.0.1:5001")
+    xgboost_experimentation = mlflow.set_experiment("model_run")
+    # mlflow.sklearn.autolog()
     
-    
-    # for feature in your_feature_columns:
-    #     print(" Feature Name: ", feature, "   Importan")
+    with mlflow.start_run(run_name=run_name) as run:
+        # Log the hyperparameters
+        mlflow.log_params(param_grid)
+        model_evaluation_metrics = {
+            "mae": mae,
+            "rmse": rmse,
+            "gsbs": best_score
+        }
 
+        # Log the loss metric
+        mlflow.log_metrics(model_evaluation_metrics)
+
+        # Set a tag that we can use to remind ourselves what this run was for
+        mlflow.set_tag("Training Info", "Predicting the Sensor readings for the next 24 hours")
+
+        # Infer the model signature
+        signature = infer_signature(X_test, y_test)
+
+        # Log the model
+        model_info = mlflow.sklearn.log_model(
+            sk_model=xgb_model_with_best_params,
+            artifact_path="mlrun",
+            signature=signature,
+            input_example=X_test,
+            registered_model_name="xgboost_model",
+        )
     
-    # print(processed_data.head(20))
+    
+    
+
     
     
     
