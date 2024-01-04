@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/1.%20BS%20CS%20FALL%202023/MLOps/Project/project/mlruns/0/03a5c27c5ea84810ad8f9c357f86ead1/artifacts
+end_time: 1704061532062
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 03a5c27c5ea84810ad8f9c357f86ead1
+run_name: unequaled-hog-103
+run_uuid: 03a5c27c5ea84810ad8f9c357f86ead1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1704061516642
+status: 3
+tags: []
+user_id: DELL
