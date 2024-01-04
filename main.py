@@ -176,39 +176,14 @@ def run_main():
         pickle.dump(loaded_model, file)
 
     print(f"Model saved to {output_file_path}")
+    
+    subprocess.call(['rm', '-rf', 'xgboost_model.pkl'])
+    output_file_path = "xgboost_model.pkl"
 
+    with open(output_file_path, 'wb') as file:
+        pickle.dump(loaded_model, file)
 
-    # if runs.empty:
-    #     print("No runs found in the specified experiment.")
-    #     return
-
-    # artifact_uri = runs.iloc[0]['artifact_uri']
-    # loaded_model = mlflow.sklearn.load_model(f"{artifact_uri}/xgboost_model")
-
-    # # Save the model as a pickle file
-    # with open("flask-app/", 'wb') as file:
-    #     pickle.dump(loaded_model, file)
-
-    # print(f"Best model saved to Flask App")
-
-    # x = int(input("Do you want to update the best model? (0/1)"))
-    # if x == 1:
-    #     best_model = grid_search.best_estimator_
-    #     best_params = grid_search.best_params_
-    #     subprocess.call(['rm', '-rf', 'app/best_model'])
-    #     mlflow.sklearn.save_model(best_model, "flask-app/best_model")
-
-    #     # Register the best model with MLflow
-    #     mlflow.sklearn.log_model(
-    #         sk_model=best_model,
-    #         artifact_path="mlruns",
-    #         signature= signature,
-    #         registered_model_name="xgboost_best_model",
-    #     )
-
-    #     print("Model saved to MLFlow")
-    # else:
-    #     print("Model log recorded")
+    print(f"Model saved to {output_file_path}")
 
 
 if __name__ == "__main__":
