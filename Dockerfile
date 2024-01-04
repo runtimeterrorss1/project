@@ -5,6 +5,6 @@ COPY . /app
 COPY mlruns /app/models
 
 RUN pip install --upgrade pip
-EXPOSE 8080
+EXPOSE 5002
 RUN pip install -r requirements.txt
 CMD ["python","app.py"]
