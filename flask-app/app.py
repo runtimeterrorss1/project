@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 import pickle
 import datetime
 import pandas as pd
+import random
+
 
 app = Flask(__name__)
 
@@ -19,25 +21,33 @@ def predict():
         timestamp = request.form['timestamp']
         monitor_id = int(request.form['monitor_id'])
         sensor_id = int(request.form['sensor_id'])
-        
+
+        print(timestamp)
+
         df = pd.DataFrame({
-            'Machine_ID': monitor_id,
-            'Sensor_ID': sensor_id,
-            'Timestamp': pd.to_datetime(timestamp),
+            'Machine_ID': [monitor_id],
+            'Reading_Lag_1': [random.randrange(50, 201)],
+            'Reading_Lag_3': [random.randrange(50, 201)],
+            'Sensor_ID': [sensor_id],
+            'Timestamp': [pd.to_datetime(timestamp)],
         })
         df['dayofweek'] = df['Timestamp'].dt.dayofweek
-        df['hour'] = df['Timestamp'].dt.hour
-        df['weekofmonth'] = df['Timestamp'].dt.week // 4 + 1
-        
-        df['Reading_Lag_1'] = df.groupby(['Machine_ID', 'Sensor_ID'])['Reading'].shift(1)
-        df['Reading_Lag_3'] = df.groupby(['Machine_ID', 'Sensor_ID'])['Reading'].shift(3)
+        df['hour'] = df['Timestamp'].dt.hour    
+        df['weekofmonth'] = df['Timestamp'].apply(lambda x: (x.day-1)//7 + 1)
+
+        # Generate random values for 'Reading_Lag_1' and 'Reading_Lag_3'
+        df = df.drop('Timestamp', axis=1)
 
         # Perform any necessary data preprocessing based on your model requirements
         # For example, convert timestamp to a format compatible with your model
 
         # Make predictions using your model
+        print("predictions: ")
+        print(df)
         prediction = model.predict(df)
+        print("predictions:", prediction)
 
+        # return render_template('results.html', prediction="Success")
         return render_template('results.html', prediction=prediction[0])
 
     except Exception as e:
