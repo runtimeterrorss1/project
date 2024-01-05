@@ -47,7 +47,7 @@ jobs:
 
       - name: Running MLFLOW
         run: |
-          mlflow ui --port 5001
+          mlflow ui --port 5001 &
 
       - name: Running Main (If its first time)
         run: |
@@ -72,3 +72,6 @@ jobs:
       - name: Running Monitor
         run: |
           python drift_monitoring.py
+
+      - name: Stop mlflow ui
+        run: pkill -f "mlflow ui --port 5001"
