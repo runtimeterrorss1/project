@@ -73,5 +73,11 @@ jobs:
         run: |
           python drift_monitoring.py
 
+      - name: Commiting Model
+        run: |
+          git add .
+          git diff --quiet --exit-code || git commit -m "Saving Trained Model"
+          git push origin main
+
       - name: Stop mlflow ui
         run: pkill -f "mlflow ui --port 5001"
