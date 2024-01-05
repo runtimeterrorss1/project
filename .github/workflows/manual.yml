@@ -38,23 +38,27 @@ jobs:
 
       - name: Comitting and Pushing New Data Changes
         run: |
-            git add data/dummy_sensor_data.csv.dvc
-            git diff --quiet --exit-code || git commit -m "Commit DVC metadata"
-            dvc add data/dummy_sensor_data.csv
-            git add data/dummy_sensor_data.csv.dvc
-            git diff --quiet --exit-code || git commit -m "Comitting and Pushing New Data Changes"
-            git push origin main
+          git add data/dummy_sensor_data.csv.dvc
+          git diff --quiet --exit-code || git commit -m "Commit DVC metadata"
+          dvc add data/dummy_sensor_data.csv
+          git add data/dummy_sensor_data.csv.dvc
+          git diff --quiet --exit-code || git commit -m "Comitting and Pushing New Data Changes"
+          git push origin main
 
       - name: Setup DVC
         run: |
           dvc remote add --default drive gdrive://1bbld5ZZqcoyAMVKLSjmX5PxJHhi6TtS_
 
-      - name: Pushing data to DVC
-        run: |
-          dvc push
+      #   - name: Pushing data to DVC
+      #     run: |
+      #       dvc push
 
-      - name: Save new files back to github repo
+      #   - name: Save new files back to github repo
+      #     run: |
+      #       git add .dvc/config
+      #       git commit -m "Updating .dvc/config"
+      #       git push origin main
+
+      - name: Running Monitor
         run: |
-          git add .dvc/config
-          git commit -m "Updating .dvc/config"
-          git push origin main
+          python drift_monitoring.py
