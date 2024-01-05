@@ -44,8 +44,7 @@ jobs:
       - name: Setup DVC
         run: |
           dvc remote add --default drive gdrive://1bbld5ZZqcoyAMVKLSjmX5PxJHhi6TtS_
-          dvc remote modify drive gdrive_acknowledge_abuse true
-
+    
       - name: Pushing data to DVC
         run: |
           dvc push
