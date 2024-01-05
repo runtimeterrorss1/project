@@ -75,7 +75,7 @@ jobs:
 
       - name: Commiting Model
         run: |
-          git add .
+          git add xgboost_model.pkl
           git diff --quiet --exit-code || git commit -m "Saving Trained Model"
           git push origin main
 
