@@ -35,8 +35,8 @@ jobs:
 
       - name: Comitting and Pushing New Data Changes
         run: |
-          dvc add dummy_sensor_data.csv
-          git add dummy_sensor_data.csv.dvc
+          dvc add data/dummy_sensor_data.csv
+          git add data/dummy_sensor_data.csv.dvc
           git commit -m "Comitting and Pushing New Data Changes"
           git push origin main
 
