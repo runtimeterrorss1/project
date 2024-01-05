@@ -45,6 +45,10 @@ jobs:
           git diff --quiet --exit-code || git commit -m "Comitting and Pushing New Data Changes"
           git push origin main
 
+      - name: Running MLFLOW
+        run: |
+          mlflow ui --port 5001
+
       - name: Running Main (If its first time)
         run: |
           if [ ! -d ".pkl" ]; then
