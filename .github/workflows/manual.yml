@@ -1,0 +1,56 @@
+name: Main Workflow
+on:
+  #   schedule:
+  #     - cron: "0 1 * * *"
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      # Add your desired steps here
+      - name: Configurations
+        run: |
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"
+          git config --global user.name "${{ secrets.GIT_USERNAME }}"
+
+      - name: Install dvc
+        run: |
+          make install
+          dvc --version
+
+      - name: Generating Data
+        run: python data/random_data.py
+
+      - name: Comitting and Pushing New Data Changes
+        run: |
+          dvc add dummy_sensor_data.csv
+          git add dummy_sensor_data.csv.dvc
+          git commit -m "Comitting and Pushing New Data Changes"
+          git push origin main
+
+      - name: Setup DVC
+        run: |
+          dvc remote add --default drive gdrive://1bbld5ZZqcoyAMVKLSjmX5PxJHhi6TtS_
+          dvc remote modify drive gdrive_acknowledge_abuse true
+
+      - name: Pushing data to DVC
+        run: |
+          dvc push
+
+      - name: Save new files back to github repo
+        run: |
+          git add .dvc/config
+          git commit -m "Updating .dvc/config"
+          git push origin main
