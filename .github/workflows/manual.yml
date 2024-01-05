@@ -45,9 +45,9 @@ jobs:
           git diff --quiet --exit-code || git commit -m "Comitting and Pushing New Data Changes"
           git push origin main
 
-      - name: Setup DVC
-        run: |
-          dvc remote add --default drive gdrive://1bbld5ZZqcoyAMVKLSjmX5PxJHhi6TtS_
+    #   - name: Setup DVC
+    #     run: |
+    #       dvc remote add --default drive gdrive://1bbld5ZZqcoyAMVKLSjmX5PxJHhi6TtS_
 
       #   - name: Pushing data to DVC
       #     run: |
