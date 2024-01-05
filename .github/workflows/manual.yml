@@ -82,8 +82,7 @@ jobs:
           git diff --quiet --exit-code || git commit -m "Saving Trained Model"
           git push origin main
 
-      - name: Stop mlflow ui
-        run: pkill -f "mlflow ui --port 5001"
+
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -92,4 +91,6 @@ jobs:
         run: docker build -t runtimeterrors/project:latest -f flask-app/Dockerfile ./flask-app
 
       - name: Push Docker Image
-        run: docker push runtimeterrors/project:latest
+        run: |
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker push runtimeterrors/project:latest

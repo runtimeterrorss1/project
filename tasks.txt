@@ -1,1 +1,9 @@
+Muhammad Saad Khan:
+Data Preprocessing, MLFlow application, Flask App, YML Workflows
+
+Areeba Sattar:
+Monitoring and Concept Drifting, Docker Containerization, YML Workflow
+
+Ateeb Ahmed:
+DVC Application, Model Training, YML Workflows
 
