@@ -32,7 +32,7 @@ jobs:
           dvc --version
 
       - name: Generating Data
-        run: python data/random_data.py
+        run: python random_data.py
 
       - name: Comitting and Pushing New Data Changes
         run: |
