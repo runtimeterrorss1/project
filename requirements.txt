@@ -5,3 +5,4 @@ Flask==2.2.5
 pandas==1.1.5
 numpy==1.21.6
 dvc-gdrive==3.0.0
+xgboost==2.0.3
