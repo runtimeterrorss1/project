@@ -72,6 +72,6 @@ if __name__ == "__main__":
         start_date, end_date, num_machines=5, num_sensors=3)
 
     # Save dummy data to CSV file
-    dummy_data.to_csv('dummy_sensor_data.csv', index=False)
+    dummy_data.to_csv(data_file_path, index=False)
 
     generate_and_append_data(data_file_path)
