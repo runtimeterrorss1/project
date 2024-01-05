@@ -28,7 +28,9 @@ jobs:
       - name: Install dvc
         run: |
           make install
+          if [ ! -d ".dvc" ]; then
           dvc init
+          fi
           dvc --version
 
       - name: Generating Data
@@ -44,7 +46,7 @@ jobs:
       - name: Setup DVC
         run: |
           dvc remote add --default drive gdrive://1bbld5ZZqcoyAMVKLSjmX5PxJHhi6TtS_
-    
+
       - name: Pushing data to DVC
         run: |
           dvc push
